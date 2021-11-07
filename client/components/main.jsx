@@ -1,13 +1,22 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import Head from './head'
+import Header from './header'
+import Input from './common/input'
+import Button from './common/button'
+import Table from './common/table'
 
 const Main = () => {
+  const { foodList } = useSelector((s) => s.foods)
   return (
-    <div className="flex justify-center p-4 bg-gray-600">
+    <>
       <Head title="Main" />
-      <div className="flex font-semibold text-gray-200">MERN Boilerplate</div>
-    </div>
+      <Header />
+      <Input />
+      <Button name="Add" />
+      <Table list={foodList} />
+    </>
   )
 }
 
