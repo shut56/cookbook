@@ -1,9 +1,28 @@
 import React from 'react'
 
 const Table = ({ list }) => {
+  const totalAmount = (arr) => {
+    return arr.reduce((acc, rec) => {
+      return {
+        ...acc,
+        calories: acc.calories + rec.calories,
+        protein: acc.protein + rec.protein,
+        fat: acc.fat + rec.fat,
+        carbohydrate: acc.carbohydrate + rec.carbohydrate,
+        weight: acc.weight + rec.weight,
+      }
+    }, {
+      calories: 0,
+      protein: 0,
+      fat: 0,
+      carbohydrate: 0,
+      weight: 0,
+    })
+  }
+
   return (
     <table>
-      <tbody>
+      <thead>
         <tr>
           <th>Name</th>
           <th>Calories</th>
@@ -12,6 +31,8 @@ const Table = ({ list }) => {
           <th>Carbo</th>
           <th>Weight</th>
         </tr>
+      </thead>
+      <tbody>
         {
           list.map((element) => {
             return (
@@ -27,6 +48,16 @@ const Table = ({ list }) => {
           })
         }
       </tbody>
+      <tfoot>
+        <tr>
+          <td className="font-bold">Summary:</td>
+          <td>{totalAmount(list)?.calories.toFixed(2)}</td>
+          <td>{totalAmount(list)?.protein.toFixed(2)}</td>
+          <td>{totalAmount(list)?.fat.toFixed(2)}</td>
+          <td>{totalAmount(list)?.carbohydrate.toFixed(2)}</td>
+          <td>{totalAmount(list)?.weight.toFixed(2)}</td>
+        </tr>
+      </tfoot>
     </table>
   )
 }
