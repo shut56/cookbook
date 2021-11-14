@@ -25,12 +25,11 @@ export default (state = initialState, action) => {
   }
 }
 
-export function getFood() {
+export function getFood(name = '', weight = 100) {
   return (dispatch, getState) => {
     const store = getState()
-    const { inputText } = store.common
     const { foodList } = store.foods
-    fetch(`/api/v1/${inputText}`)
+    fetch(`/api/v1/${name}`)
       .then((r) => r.json())
       .then((result) => {
         dispatch({
@@ -41,7 +40,7 @@ export function getFood() {
         if (result.status === 'success') {
           dispatch({
             type: UPDATE_FOOD_LIST,
-            payload: [...foodList, result.data]
+            payload: [...foodList, { ...result.data, weight }]
           })
         }
       })

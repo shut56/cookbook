@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux'
 
 import Head from './head'
 import Header from './header'
-import Input from './common/input'
-import Button from './common/button'
+import InputPanel from './common/input'
 import Table from './common/table'
 
 const Main = () => {
@@ -13,8 +12,7 @@ const Main = () => {
     <>
       <Head title="Main" />
       <Header />
-      <Input />
-      <Button name="Add" />
+      <InputPanel />
       <Table list={foodList} />
     </>
   )

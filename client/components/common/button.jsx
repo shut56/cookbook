@@ -1,15 +1,6 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
-import { getFood } from '../../redux/reducers/foods'
-
-const Button = ({ name }) => {
-  const dispatch = useDispatch()
-
-  const onClick = () => {
-    dispatch(getFood())
-  }
-
+const Button = ({ name, onClick }) => {
   return (
     <button
       type="button"
