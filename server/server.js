@@ -46,7 +46,7 @@ server.get('/api/v1/:product', async (req, res) => {
   const translatedProduct = await translate(product, { to: 'en' })
     .then((r) => {
       console.log('Translated product: ', r)
-      return res.toLowerCase()
+      return r.toLowerCase()
     })
     .catch((err) => {
       console.log(err)
@@ -62,7 +62,10 @@ server.get('/api/v1/:product', async (req, res) => {
       throw Error('Unknown food')
     }
     console.log('FOOD: ', foodCard)
-    res.json(foodCard)
+    res.json({
+      status: 'success',
+      data: foodCard
+    })
   } catch (e) {
     console.log(`Unknown food. Looking for ${translatedProduct} in API...`)
     await axios({
