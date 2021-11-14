@@ -67,6 +67,7 @@ server.get('/api/v1/:product', async (req, res) => {
       data: foodCard
     })
   } catch (e) {
+    console.log(e)
     console.log(`Unknown food. Looking for ${translatedProduct} in API...`)
     await axios({
       method: 'post',
@@ -78,8 +79,7 @@ server.get('/api/v1/:product', async (req, res) => {
     })
       .then(({ data }) => data.foods[0])
       .then((prodObj) => ({
-        status: 'success',
-        nutritionix_db_id: prodObj.ndb_no,
+        nutritionix_iddb: prodObj.ndb_no,
         name: prodObj.food_name,
         calories: prodObj.nf_calories,
         fat: prodObj.nf_total_fat,

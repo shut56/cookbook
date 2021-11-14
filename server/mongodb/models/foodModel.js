@@ -1,14 +1,14 @@
 import mongoose from 'mongoose'
 
 const foodSchema = new mongoose.Schema({
-  nutritionix_db_id: {
+  nutritionix_iddb: {
     type: Number,
     required: true,
   },
   name: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
   },
   calories: {
     type: Number,
@@ -30,4 +30,4 @@ const foodSchema = new mongoose.Schema({
   timestamps: true
 })
 
-export default mongoose.model('foods', foodSchema)
+export default mongoose.model('products', foodSchema)
