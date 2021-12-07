@@ -13,8 +13,7 @@ const initialState = {
   },
 }
 
-function getTotalNutrients(list = [], initialValue) {
-  console.log('initialValue', initialValue)
+function getTotalNutrients(list = []) {
   return list.reduce((acc, rec) => {
     acc.calories = +(acc.calories + (rec.calories * (rec.weight / 100))).toFixed(2)
     acc.protein = +(acc.protein + (rec.protein * (rec.weight / 100))).toFixed(2)
