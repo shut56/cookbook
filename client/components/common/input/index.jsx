@@ -12,7 +12,7 @@ const InputPanel = () => {
   const [foodWeight, setFoodWeight] = useState(100)
 
   const onClick = () => {
-    dispatch(getFood(foodName, foodWeight))
+    dispatch(getFood(foodName, +foodWeight))
     setFoodName('')
     setFoodWeight(100)
   }

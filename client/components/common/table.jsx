@@ -1,64 +1,70 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
-const Table = ({ list }) => {
-  const totalAmount = (arr) => {
-    return arr.reduce((acc, rec) => {
-      return {
-        ...acc,
-        calories: acc.calories + rec.calories,
-        protein: acc.protein + rec.protein,
-        fat: acc.fat + rec.fat,
-        carbohydrate: acc.carbohydrate + rec.carbohydrate,
-        weight: acc.weight + rec.weight,
-      }
-    }, {
-      calories: 0,
-      protein: 0,
-      fat: 0,
-      carbohydrate: 0,
-      weight: 0,
-    })
+const Table = () => {
+  const { foodList, totalNutrients } = useSelector((s) => s.foods)
+
+  const totalWeightPerElement = (elementWeight = 0, weight = 0) => {
+    return +(elementWeight * (weight / 100)).toFixed(2)
+  }
+
+  const nutrientsPer100grams = (total = 0, weight = 0) => {
+    const multi = weight / 100
+    if (multi < 1) {
+      return 0
+    }
+    return +(total / multi).toFixed(2)
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Calories</th>
-          <th>Proteins</th>
-          <th>Fats</th>
-          <th>Carbo</th>
-          <th>Weight</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          list.map((element) => {
-            return (
-              <tr key={element._id}>
-                <td>{element?.name}</td>
-                <td>{element?.calories}</td>
-                <td>{element?.protein}</td>
-                <td>{element?.fat}</td>
-                <td>{element?.carbohydrate}</td>
-                <td>{element?.weight}</td>
-              </tr>
-            )
-          })
-        }
-      </tbody>
-      <tfoot>
-        <tr>
-          <td className="font-bold">Summary:</td>
-          <td>{totalAmount(list)?.calories.toFixed(2)}</td>
-          <td>{totalAmount(list)?.protein.toFixed(2)}</td>
-          <td>{totalAmount(list)?.fat.toFixed(2)}</td>
-          <td>{totalAmount(list)?.carbohydrate.toFixed(2)}</td>
-          <td>{totalAmount(list)?.weight.toFixed(2)}</td>
-        </tr>
-      </tfoot>
-    </table>
+    <div className="overflow-hidden shadow rounded-lg m-2">
+      <table className="min-w-full">
+        <thead>
+          <tr className="bg-blue-200">
+            <th className="py-1">Name</th>
+            <th>Calories</th>
+            <th>Proteins</th>
+            <th>Fats</th>
+            <th>Carbo</th>
+            <th>Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            foodList.map((element, index) => {
+              return (
+                <tr key={`${element._id}${index}`} className="even:bg-blue-100 text-center">
+                  <td className="py-1">{element?.name}</td>
+                  <td>{totalWeightPerElement(element?.calories, element?.weight)}</td>
+                  <td>{totalWeightPerElement(element?.protein, element?.weight)}</td>
+                  <td>{totalWeightPerElement(element?.fat, element?.weight)}</td>
+                  <td>{totalWeightPerElement(element?.carbohydrate, element?.weight)}</td>
+                  <td>{element?.weight} g.</td>
+                </tr>
+              )
+            })
+          }
+        </tbody>
+        <tfoot>
+          <tr className="text-center border-t">
+            <td className="font-bold py-1 max-w-xs">Total:</td>
+            <td>{totalNutrients.calories}</td>
+            <td>{totalNutrients.protein}</td>
+            <td>{totalNutrients.fat}</td>
+            <td>{totalNutrients.carbohydrate}</td>
+            <td>{totalNutrients.weight} g.</td>
+          </tr>
+          <tr className="text-center border-t">
+            <td className="font-bold py-1 max-w-xs">Per 100 grams:</td>
+            <td>{nutrientsPer100grams(totalNutrients.calories, totalNutrients.weight)}</td>
+            <td>{nutrientsPer100grams(totalNutrients.protein, totalNutrients.weight)}</td>
+            <td>{nutrientsPer100grams(totalNutrients.fat, totalNutrients.weight)}</td>
+            <td>{nutrientsPer100grams(totalNutrients.carbohydrate, totalNutrients.weight)}</td>
+            <td />
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   )
 }
 
